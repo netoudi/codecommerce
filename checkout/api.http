@@ -1,0 +1,30 @@
+@baseUrl = http://host.docker.internal:3333
+
+### all products
+GET {{baseUrl}}/products
+Accept: application/json
+
+### create product
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "name": "Product name",
+  "description": "Product description",
+  "image_url": "https://via.placeholder.com/150",
+  "price": 100
+}
+
+### update product
+PATCH {{baseUrl}}/products/58e390b7-9a87-4adf-830f-a0c9d4327c57
+Content-Type: application/json
+
+{
+  "price": 300
+}
+
+### get product
+GET {{baseUrl}}/products/58e390b7-9a87-4adf-830f-a0c9d4327c57
+
+### delete product
+DELETE {{baseUrl}}/products/58e390b7-9a87-4adf-830f-a0c9d4327c57
