@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  db:
+    build: .docker/mysql
+    container_name: codecommerce-checkout-db
+    restart: always
+    tty: true
+    ports:
+      - "3308:3306"
+    volumes:
+      - .docker/dbdata:/var/lib/mysql
+      - .docker/mysql/initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
