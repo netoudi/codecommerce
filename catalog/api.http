@@ -1,0 +1,37 @@
+@baseUrl = http://host.docker.internal:8080
+
+###
+GET {{baseUrl}}/categories
+
+###
+POST {{baseUrl}}/categories
+
+{
+	"name": "My category"
+}
+
+###
+GET {{baseUrl}}/categories/730bfa32-d18c-4cd0-b75e-32292b80dc87
+
+
+###
+GET {{baseUrl}}/products
+
+###
+POST {{baseUrl}}/products
+
+{
+	"name": "My category",
+	"description": "Product description",
+	"price": 97.99,
+	"image_url": "http://localhost",
+	"category_id": "730bfa32-d18c-4cd0-b75e-32292b80dc87"
+}
+
+###
+GET {{baseUrl}}/products/14cd8576-e875-4cec-8fe9-0876811995ef
+
+
+###
+GET {{baseUrl}}/products/categories/730bfa32-d18c-4cd0-b75e-32292b80dc87
+
