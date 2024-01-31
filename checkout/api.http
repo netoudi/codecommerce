@@ -1,12 +1,24 @@
 @baseUrl = http://host.docker.internal:3333
+@accessToken = {{authorization.response.body.access_token}}
 
-### login
+### login with john
+# @name authorization
 POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
   "username": "john",
   "password": "john"
+}
+
+### login whit chris
+# @name authorization
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "username": "chris",
+  "password": "chris"
 }
 
 ### all products
@@ -40,9 +52,11 @@ DELETE {{baseUrl}}/products/58e390b7-9a87-4adf-830f-a0c9d4327c57
 
 ### all order
 GET {{baseUrl}}/orders
+Authorization: Bearer {{accessToken}}
 
 ### create order
 POST {{baseUrl}}/orders
+Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {

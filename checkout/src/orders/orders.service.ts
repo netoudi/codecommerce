@@ -12,7 +12,7 @@ export class OrdersService {
     @InjectRepository(Product) private productRepository: Repository<Product>,
   ) {}
 
-  async create(createOrderDto: CreateOrderDto) {
+  async create(createOrderDto: CreateOrderDto & { client_id: number }) {
     const productsIds = createOrderDto.items.map((item) => item.product_id);
     const uniqueProductIds = [...new Set(productsIds)];
     const products = await this.productRepository.findBy({ id: In(uniqueProductIds) });
@@ -22,7 +22,7 @@ export class OrdersService {
       );
     }
     const order = Order.create({
-      client_id: 1,
+      client_id: createOrderDto.client_id,
       items: createOrderDto.items.map((item) => {
         const product = products.find((product) => product.id === item.product_id);
         return {
@@ -36,11 +36,11 @@ export class OrdersService {
     return order;
   }
 
-  findAll() {
-    return this.orderRepository.find();
+  findAll(clientId: number) {
+    return this.orderRepository.find({ where: { clientId }, order: { createdAt: 'DESC' } });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} order`;
+  findOne(id: string, clientId: number) {
+    return this.orderRepository.findOneByOrFail({ id, clientId });
   }
 }
