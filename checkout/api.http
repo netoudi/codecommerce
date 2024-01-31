@@ -28,3 +28,24 @@ GET {{baseUrl}}/products/58e390b7-9a87-4adf-830f-a0c9d4327c57
 
 ### delete product
 DELETE {{baseUrl}}/products/58e390b7-9a87-4adf-830f-a0c9d4327c57
+
+### all order
+GET {{baseUrl}}/orders
+
+### create order
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+  "items": [
+    {
+      "product_id": "01a4fa95-03d7-4f6b-aa7b-b69a3f842184",
+      "quantity": 1
+    },
+    {
+      "product_id": "2bd20500-aa2f-40ca-9d90-04fcd0113ec3",
+      "quantity": 2
+    }
+  ],
+  "card_hash": "123"
+}
