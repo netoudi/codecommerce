@@ -8,6 +8,7 @@ import { Box, Button, Divider, Slider, Typography } from '@mui/material';
 import * as yup from 'yup';
 import { Total } from '@/components/total';
 import { Product } from '@/models';
+import { addToCartAction } from '@/server-actions/cart.action';
 
 const schema = yup
   .object({
@@ -39,7 +40,7 @@ export function ProductQuantityForm(props: { product: Product }) {
   }, [watch, product, getValues]);
 
   return (
-    <Box component="form" sx={{ p: 1 }}>
+    <Box component="form" sx={{ p: 1 }} action={addToCartAction}>
       <Box
         sx={{
           display: 'flex',
