@@ -3,36 +3,11 @@ import Link from 'next/link';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Box, Button, Card, CardActions, CardContent, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
-import { Product } from '@/models';
+import { ProductService } from '@/services/product.service';
 
-const products: Product[] = [
-  {
-    id: '1',
-    name: 'Produto 1',
-    description: 'Descrição do produto 1',
-    price: 100,
-    image_url: 'https://source.unsplash.com/random?product',
-    category_id: '1',
-  },
-  {
-    id: '1',
-    name: 'Produto 1',
-    description: 'Descrição do produto 1',
-    price: 100,
-    image_url: 'https://source.unsplash.com/random?product',
-    category_id: '1',
-  },
-  {
-    id: '1',
-    name: 'Produto 1',
-    description: 'Descrição do produto 1',
-    price: 100,
-    image_url: 'https://source.unsplash.com/random?product',
-    category_id: '1',
-  },
-];
+export default async function Home() {
+  const products = await new ProductService().getProducts();
 
-export default function Home() {
   return (
     <Grid2 container spacing={2}>
       {products.length === 0 && (

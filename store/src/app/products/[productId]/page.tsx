@@ -4,18 +4,11 @@ import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import { Box, Card, CardContent, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import { ProductQuantityForm } from '@/app/products/[productId]/product-quantity-form';
-import { Product } from '@/models';
-
-const product: Product = {
-  id: '1',
-  name: 'Camisa',
-  description: 'Camisa branca',
-  price: 100,
-  image_url: 'https://source.unsplash.com/random?product',
-  category_id: '1',
-};
+import { ProductService } from '@/services/product.service';
 
 export default async function ProductDetailPage({ params }: { params: { productId: string } }) {
+  const product = await new ProductService().getProduct(params.productId);
+
   return (
     <Grid2 container spacing={2}>
       <Grid2 xs={12} md={7} position={'relative'} sx={{ height: { xs: '360px', md: 'unset' } }}>
