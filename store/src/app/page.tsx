@@ -3,12 +3,32 @@ import Link from 'next/link';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Box, Button, Card, CardActions, CardContent, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
-import { ProductService } from '@/services/product.service';
+import { Product } from '@/models';
+
+async function getProducts({ search, categoryId }: { search?: string; categoryId?: string }): Promise<Product[]> {
+  const urlSearchParams = new URLSearchParams();
+  if (search) {
+    urlSearchParams.append('search', search);
+  }
+  if (categoryId) {
+    urlSearchParams.append('category_id', categoryId);
+  }
+  let url = `${process.env.NEXT_API_URL}/products`;
+  if (urlSearchParams.toString()) {
+    url += `?${urlSearchParams.toString()}`;
+  }
+  const response = await fetch(url, {
+    next: {
+      revalidate: 1,
+    },
+  });
+  return response.json();
+}
 
 export default async function Home({ searchParams }: { searchParams: { search?: string; category_id?: string } }) {
   const search = searchParams.search;
   const categoryId = searchParams.category_id;
-  const products = await new ProductService().getProducts({ search, categoryId });
+  const products = await getProducts({ search, categoryId });
 
   return (
     <Grid2 container spacing={2}>
