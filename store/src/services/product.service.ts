@@ -1,13 +1,22 @@
 import { Product } from '@/models';
 
 export class ProductService {
-  async getProducts(): Promise<Product[]> {
-    const response = await fetch(`${process.env.CATALOG_API_URL}/products`, {
+  async getProducts({ search, categoryId }: { search?: string; categoryId?: string }): Promise<Product[]> {
+    let url = `${process.env.CATALOG_API_URL}/products`;
+    if (categoryId) {
+      url += `/categories/${categoryId}`;
+    }
+    const response = await fetch(url, {
       next: {
         revalidate: 1,
       },
     });
-    return response.json();
+    let data = await response.json();
+    data = !data ? [] : data;
+    if (search) {
+      return data.filter((product: Product) => product.name.toLowerCase().includes(search.toLowerCase()));
+    }
+    return data;
   }
 
   async getProduct(productId: string): Promise<Product> {

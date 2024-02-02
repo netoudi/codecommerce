@@ -6,8 +6,11 @@ import { AppBar, Box, IconButton, Toolbar, Typography } from '@mui/material';
 import { SearchBar } from '@/components/search-bar';
 import { SelectCategory } from '@/components/select-category';
 import { UserMenu } from '@/components/user-menu';
+import { CategoryService } from '@/services/category.service';
 
 export async function Navbar() {
+  const categories = await new CategoryService().getCategories();
+
   return (
     <AppBar position="fixed">
       <Toolbar sx={{ backgroundColor: 'background.paper' }}>
@@ -30,7 +33,7 @@ export async function Navbar() {
           p: 1,
         }}
       >
-        <SelectCategory categories={[]} />
+        <SelectCategory categories={categories} />
         <Box component={Link} href={'/'} sx={{ textDecoration: 'none', display: 'flex', ml: 3 }}>
           <HomeIcon sx={{ color: 'text.primary' }} />
           <Typography color="text.primary" sx={{ fontWeight: 500, display: 'flex' }}>

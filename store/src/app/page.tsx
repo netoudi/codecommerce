@@ -5,8 +5,10 @@ import { Box, Button, Card, CardActions, CardContent, Typography } from '@mui/ma
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import { ProductService } from '@/services/product.service';
 
-export default async function Home() {
-  const products = await new ProductService().getProducts();
+export default async function Home({ searchParams }: { searchParams: { search?: string; category_id?: string } }) {
+  const search = searchParams.search;
+  const categoryId = searchParams.category_id;
+  const products = await new ProductService().getProducts({ search, categoryId });
 
   return (
     <Grid2 container spacing={2}>
