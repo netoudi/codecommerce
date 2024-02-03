@@ -18,9 +18,12 @@ services:
 
   rabbitmq:
     image: rabbitmq:3.12-management
+    container_name: codecommerce-checkout-rabbitmq
     ports:
       - "15672:15672"
       - "5672:5672"
+    volumes:
+      - .docker/rabbitmq:/var/lib/rabbitmq
     environment:
       - RABBITMQ_DEFAULT_USER=admin
       - RABBITMQ_DEFAULT_PASS=admin
