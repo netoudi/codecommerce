@@ -43,11 +43,11 @@ export class OrdersService {
     return order;
   }
 
-  findAll(clientId: number) {
-    return this.orderRepository.find({ where: { clientId }, order: { createdAt: 'DESC' } });
+  findAll(client_id: number) {
+    return this.orderRepository.find({ where: { client_id }, order: { created_at: 'DESC' } });
   }
 
-  findOne(id: string, clientId: number) {
-    return this.orderRepository.findOneByOrFail({ id, clientId });
+  findOne(id: string, client_id: number) {
+    return this.orderRepository.findOneByOrFail({ id, client_id });
   }
 }

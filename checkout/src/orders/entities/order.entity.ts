@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { OrderItem } from '@/orders/entities/order-item.entity';
 
 export enum OrderStatus {
@@ -24,24 +24,27 @@ export class Order {
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   total: number;
 
-  @Column({ name: 'client_id' })
-  clientId: number;
+  @Column()
+  client_id: number;
 
   @Column()
   status: OrderStatus = OrderStatus.PENDING;
 
-  @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
+  @CreateDateColumn()
+  created_at: Date;
 
-  @OneToMany(() => OrderItem, (item) => item.order, { cascade: ['insert'] })
+  @UpdateDateColumn()
+  updated_at: Date;
+
+  @OneToMany(() => OrderItem, (item) => item.order, { cascade: ['insert'], eager: true })
   items: OrderItem[];
 
   static create(input: CreateOrderCommand) {
     const order = new Order();
-    order.clientId = input.client_id;
+    order.client_id = input.client_id;
     order.items = input.items.map((item) => {
       const orderItem = new OrderItem();
-      orderItem.productId = item.product_id;
+      orderItem.product_id = item.product_id;
       orderItem.quantity = item.quantity;
       orderItem.price = item.price;
       return orderItem;

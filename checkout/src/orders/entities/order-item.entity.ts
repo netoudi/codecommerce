@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Order } from '@/orders/entities/order.entity';
 import { Product } from '@/products/entities/product.entity';
 
@@ -13,12 +13,17 @@ export class OrderItem {
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   price: number;
 
-  @ManyToOne(() => Product)
+  @ManyToOne(() => Product, { eager: true })
+  @JoinColumn({ name: 'product_id' })
   product: Product;
 
-  @Column({ name: 'product_id' })
-  productId: string;
+  @Column()
+  product_id: string;
 
   @ManyToOne(() => Order)
+  @JoinColumn({ name: 'order_id' })
   order: Order;
+
+  @Column()
+  order_id: string;
 }
