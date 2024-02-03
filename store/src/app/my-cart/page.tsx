@@ -72,16 +72,18 @@ export default async function MyCartPage() {
               </ListItem>
             )}
           </List>
-          <Box sx={{ display: 'flex', justifyContent: 'end' }}>
-            <Total total={cart.total} />
-          </Box>
+          {cart.total > 0 && (
+            <Box sx={{ display: 'flex', justifyContent: 'end' }}>
+              <Total total={cart.total} />
+            </Box>
+          )}
           <Box sx={{ display: 'flex', justifyContent: 'end', mt: 2 }}>
             {cart.items.length ? (
               <Button LinkComponent={Link} href="/checkout">
                 Finalizar compra
               </Button>
             ) : (
-              <Button LinkComponent={Link} href="/products">
+              <Button LinkComponent={Link} href="/">
                 Continuar comprando
               </Button>
             )}
